@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Table from '../components/Table'; // Importuj komponentu Table
+import Table from '../components/Table';
+import SearchInput from '../components/SearchInput'; 
 import '../styles/globals.css';
 
 interface Contact {
@@ -22,11 +23,13 @@ export default function Home() {
     { id: 3, firstName: 'James', lastName: 'Brown', email: 'james.brown@example.com', phone: '555-123-4567', segment: 'C', successfullySent: true, createdAt: '2025-01-25T14:20:00Z' },
   ]);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [currentBanner, setCurrentBanner] = useState(1); // State za trenutno prikazivanje banera
 
-  // Filter funkcija za pretragu
+  // Filter funkcija za pretragu po imenu, prezimenu i emailu
   const filteredContacts = contacts.filter(contact => {
     const fullName = `${contact.firstName} ${contact.lastName}`.toLowerCase();
-    return fullName.includes(searchQuery.toLowerCase());
+    const email = contact.email.toLowerCase();
+    return fullName.includes(searchQuery.toLowerCase()) || email.includes(searchQuery.toLowerCase());
   });
 
   // Formatiranje vremena za sve kontakte
@@ -43,19 +46,30 @@ export default function Home() {
     formatDates();
   }, []);
 
+  // Postavljanje promene banera nakon 5 sekundi
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentBanner(2); // Prebaci na drugi baner
+    }, 5000); // 5 sekundi
+
+    return () => clearTimeout(timer); // Čisti timer ako se komponenta ukloni
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">Leads Management</h1>
-      {/* Polje za pretragu */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+
+      {/* Prikazivanje banera */}
+      <div className="banner">
+        {currentBanner === 1 ? (
+          <div className="banner-content">Contacts</div>
+        ) : (
+          <div className="banner-content">Search</div>
+        )}
       </div>
+
+      {/* Komponenta za pretragu */}
+      <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* Renderuj tabelu */}
       <Table contacts={filteredContacts} />

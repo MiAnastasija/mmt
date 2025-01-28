@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
     "next": "15.1.6",
     "node-fetch": "^3.3.2",
     "react": "^19.0.0",

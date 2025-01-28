@@ -4,13 +4,14 @@ import * as crypto from 'crypto';
 const WEBHOOK_SECRET = 'mywebhooksecretkey'; // Ovaj secret treba da bude isti kao u Mautic-u
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Provera da li je metod POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    const data = req.body;
-    const signature = req.headers['x-mautic-signature'];
+    const data = req.body;  // Prijem podataka sa Mautic Webhook-a
+    const signature = req.headers['x-mautic-signature'];  // Potpis koji šalje Mautic
 
     if (!signature) {
       return res.status(400).json({ message: 'Signature missing' });
@@ -21,14 +22,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = JSON.stringify(data);
     const hash = hmac.update(body).digest('hex');
 
+    // Provera da li se hash poklapa sa vrednošću iz header-a
     if (hash !== signature) {
       return res.status(403).json({ message: 'Invalid signature' });
     }
 
+    // Obrada podataka
     console.log('Valid webhook received:', data);
 
     if (data?.contact?.segments?.includes('New Leads')) {
-      // Obrada kontakta
+      // Ovde možeš da sačuvaš podatke u bazi, ili pošalješ dalje na drugi sistem
+      console.log('Contact added to New Leads:', data.contact);
     }
 
     return res.status(200).json({ message: 'Webhook received successfully' });

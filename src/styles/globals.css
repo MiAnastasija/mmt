@@ -1,21 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #ca1b1b;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020202;
-    --foreground: #ededed;
-  }
+  --background: #ffffff; /* Osnovna pozadina tabele - bela */
+  --foreground: #000000; /* Fiksna crna boja za tekst */
+  --table-hover: #f3f4f6; /* Svetlo siva pozadina na hover */
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground); /* Boja teksta */
+  background: var(--background); /* Pozadina stranice */
+  font-family: 'Comfortaa', sans-serif;
+}
+
+table {
+  font-family: 'Comfortaa', sans-serif;
+}
+
+th, td {
+  border: 1px solid #e5e7eb; /* Sive linije za ivice */
+}
+
+th {
+  background-color: #f9fafb; /* Svetlo siva pozadina za zaglavlja */
+}
+
+tr:hover {
+  background-color: var(--table-hover); /* Svetlo siva pozadina na hover */
+}
+
+tr:nth-child(even) {
+  background-color: #ffffff; /* Bela pozadina za parne redove */
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff; /* Bela pozadina za neparne redove */
+}
+
+td {
+  color: var(--foreground); /* Crna boja teksta u tabeli */
 }

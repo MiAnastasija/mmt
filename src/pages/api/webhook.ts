@@ -7,8 +7,9 @@ const WEBHOOK_SECRET = 'mywebhooksecretkey';  // Ovaj secret treba da bude isti 
 const SEGMENT_ID_NEW_LEADS = 12;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Provera da li je metoda POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+    return res.status(405).json({ message: 'Method Not Allowed' });  // Ova linija osigurava da samo POST zahtevi prolaze
   }
 
   try {

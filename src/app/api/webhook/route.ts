@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import * as crypto from 'crypto';  // Zamena require() sa importom
 
 const WEBHOOK_SECRET = 'mywebhooksecretkey'; // Ovo je secret koji si postavio u Mautic-u
 
@@ -15,7 +16,6 @@ export async function POST(req: Request) {
     }
 
     // Kreiranje HMAC hash-a koristeći tvoje secret ključ
-    const crypto = require('crypto');
     const hmac = crypto.createHmac('sha256', WEBHOOK_SECRET);
     const body = JSON.stringify(data);
     const hash = hmac.update(body).digest('hex');

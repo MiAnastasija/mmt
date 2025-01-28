@@ -1,7 +1,7 @@
-//Endpoint za prijem podataka sa Mautic webhook-a (POST).
-// src/app/api/mautic/route.ts
+/* eslint-disable no-unused-vars */
+import { NextRequest } from 'next/server';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();  // Prijem podataka sa Mautic Webhook-a
 
@@ -25,3 +25,4 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ error: 'Error processing webhook' }), { status: 500 });
   }
 }
+

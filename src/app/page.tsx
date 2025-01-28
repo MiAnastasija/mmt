@@ -5,6 +5,7 @@ import Table from '../components/Table';
 import SearchInput from '../components/SearchInput'; 
 import '../styles/globals.css';
 
+
 interface Contact {
   id: number;
   firstName: string;
